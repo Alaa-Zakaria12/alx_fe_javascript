@@ -113,6 +113,15 @@ async function fetchQuotesFromServer() {
     }
 }
 
+// Function to synchronize local quotes with the server
+async function syncQuotes() {
+    // Fetch quotes from the server
+    await fetchQuotesFromServer();
+
+    // Optionally, you can implement logic to compare local quotes with server quotes 
+    // and update the local array accordingly.
+}
+
 // Function to post a new quote to the server
 async function postQuoteToServer(quote) {
     try {
