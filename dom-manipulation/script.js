@@ -1,4 +1,5 @@
 let quotes = []; // Array to hold quote objects
+const API_URL = 'https://jsonplaceholder.typicode.com/posts'; // Mock API URL
 
 // Function to show a random quote
 function showRandomQuote() {
@@ -92,5 +93,35 @@ function importFromJsonFile(event) {
     fileReader.readAsText(event.target.files[0]);
 }
 
+// Function to fetch quotes from the server
+async function fetchQuotesFromServer() {
+    try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        // Process data to fit the quote structure
+        const fetchedQuotes = data.map(item => ({
+            text: item.title, // Example: using title as the quote text
+            category: 'fetched' // Example category
+        }));
+        quotes.push(...fetchedQuotes);
+        saveQuotes();
+        populateCategories();
+        showRandomQuote();
+    } catch (error) {
+        console.error('Error fetching quotes:', error);
+    }
+}
+
+// Function to sync quotes with the server
+async function syncQuotes() {
+    await fetchQuotesFromServer(); // Fetch new quotes from server
+    // Logic to compare and resolve conflicts can be added here
+}
+
+// Function to periodically check for new quotes from the server
+function startQuoteSyncInterval() {
+    setInterval(syncQuotes, 60000); // Check every 60 seconds
+}
+
 // Load quotes on page load
-window.onload = loadQuotes;
+window.onload = function() {}
