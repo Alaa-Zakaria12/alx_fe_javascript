@@ -136,3 +136,12 @@ async function postQuoteToServer(quote) {
             throw new Error('Network response was not ok');
         }
     }}
+
+    // Call syncQuotes initially
+syncQuotes();
+
+// Call syncQuotes every 5 minutes (300000 milliseconds)
+setInterval(syncQuotes, 300000);
+
+    // Call syncQuotes every 5 minutes (300000 milliseconds)
+setInterval(syncQuotes, 300000);
