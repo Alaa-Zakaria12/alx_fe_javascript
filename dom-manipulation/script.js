@@ -1,6 +1,11 @@
 let quotes = []; // Array to hold quote objects
 const API_URL = 'https://jsonplaceholder.typicode.com/posts'; // Mock API URL
 
+// Function to show a notification message
+function showNotification(message) {
+    alert(message); // Simple alert for demonstration
+}
+
 // Function to show a random quote
 function showRandomQuote() {
     const quoteDisplay = document.getElementById('quoteDisplay');
@@ -113,13 +118,19 @@ async function fetchQuotesFromServer() {
     }
 }
 
-// Function to synchronize local quotes with the server
+/// Function to synchronize local quotes with the server
 async function syncQuotes() {
-    // Fetch quotes from the server
-    await fetchQuotesFromServer();
+    try {
+        // Fetch quotes from the server
+        await fetchQuotesFromServer();
 
-    // Optionally, you can implement logic to compare local quotes with server quotes 
-    // and update the local array accordingly.
+        // Notify the user that quotes have been synced
+        showNotification("Quotes synced with server!");
+    } catch (error) {
+        // Handle errors
+        console.error("Error syncing quotes:", error);
+        showNotification("Failed to sync quotes with server.");
+    }
 }
 
 // Function to post a new quote to the server
@@ -137,11 +148,11 @@ async function postQuoteToServer(quote) {
         }
     }}
 
+ // Initial call to syncQuotes and set interval
+document.addEventListener('DOMContentLoaded', function() {
     // Call syncQuotes initially
-syncQuotes();
-
-// Call syncQuotes every 5 minutes (300000 milliseconds)
-setInterval(syncQuotes, 300000);
+    syncQuotes();
 
     // Call syncQuotes every 5 minutes (300000 milliseconds)
-setInterval(syncQuotes, 300000);
+    setInterval(syncQuotes, 300000);
+});
