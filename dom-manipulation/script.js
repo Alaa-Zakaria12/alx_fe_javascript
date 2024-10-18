@@ -13,7 +13,7 @@ function showRandomQuote() {
 }
 
 // Function to add a new quote
-function createAddQuoteForm() {
+function addQuote() {
     const quoteText = document.getElementById('newQuoteText').value;
     const quoteCategory = document.getElementById('newQuoteCategory').value;
 
@@ -98,7 +98,6 @@ async function fetchQuotesFromServer() {
     try {
         const response = await fetch(API_URL);
         const data = await response.json();
-        // Process data to fit the quote structure
         const fetchedQuotes = data.map(item => ({
             text: item.title, // Example: using title as the quote text
             category: 'fetched' // Example category
@@ -115,7 +114,6 @@ async function fetchQuotesFromServer() {
 // Function to sync quotes with the server
 async function syncQuotes() {
     await fetchQuotesFromServer(); // Fetch new quotes from server
-    // Logic to compare and resolve conflicts can be added here
 }
 
 // Function to periodically check for new quotes from the server
@@ -123,5 +121,6 @@ function startQuoteSyncInterval() {
     setInterval(syncQuotes, 60000); // Check every 60 seconds
 }
 
-// Load quotes on page load
-window.onload = function() {}
+// Event listeners
+document.getElementById('addQuoteButton').addEventListener('click', addQuote); // Add quote button
+document.getElementById('showNew')
